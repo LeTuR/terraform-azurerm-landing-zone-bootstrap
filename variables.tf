@@ -19,6 +19,16 @@ variable "location" {
   type        = string
 }
 
+variable "version_control_server" {
+  description = "The version control system server."
+  type        = string
+  default     = "github"
+  validation {
+    condition     = can(regex("^(github|gitlab)$", var.version_control_server))
+    error_message = "The version control system server must be either 'github' or 'gitlab'."
+  }
+}
+
 variable "github_repository_exists" {
   description = "Set to true if the repository already exists."
   type        = bool
@@ -29,16 +39,19 @@ variable "github_personal_access_token" {
   description = "The personal access token for GitHub."
   type        = string
   sensitive   = true
+  default     = ""
 }
 
 variable "github_organization_name" {
   description = "The name of your GitHub organization. This is the section of the url after 'github.com'. E.g. enter 'my-org' for 'https://github.com/my-org'"
   type        = string
+  default     = ""
 }
 
 variable "github_approvers" {
   description = "The list of GitHub users or teams that can approve the apply workflow."
   type        = list(string)
+  default     = []
 }
 
 variable "github_private_repository" {
