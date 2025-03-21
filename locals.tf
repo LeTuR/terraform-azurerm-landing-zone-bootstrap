@@ -43,9 +43,9 @@ locals {
   federated_credentials = {
     for key in [local.plan_key, local.apply_key] : key => {
       federated_credential_name          = "${local.resource_names.user_assigned_managed_identity_federated_credentials_prefix}-${key}"
-      federated_credential_issuer        = module.github.issuer
+      federated_credential_issuer        = module.github[0].issuer
       user_assigned_managed_identity_key = key
-      federated_credential_subject       = module.github.subjects[key]
+      federated_credential_subject       = module.github[0].subjects[key]
     }
   }
 

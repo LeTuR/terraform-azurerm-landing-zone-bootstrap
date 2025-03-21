@@ -17,6 +17,8 @@ module "resource_names" {
 module "github" {
   source = "./modules/github"
 
+  count = var.version_control_server == "github" ? 1 : 0
+
   service_name                                 = var.service_name
   environment_name                             = var.environment_name
   organization_name                            = var.github_organization_name
